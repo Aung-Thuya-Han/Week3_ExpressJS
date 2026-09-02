@@ -16,7 +16,7 @@ const getUserById = (req, res) => {
 const postUser = (req, res) => {
   console.log("req.body", req.body);
   const result = addUser(req.body);
-  if (result.User_id) {
+  if (result.user_id) {
     res.status(201);
     res.json({ message: "New User added.", result });
   } else {
@@ -25,12 +25,12 @@ const postUser = (req, res) => {
 };
 
 const putUser = (req, res) => {
-  // not implemented in this example, this is homework
+  res.json({ message: 'User item updated.' });
   res.sendStatus(200);
 };
 
 const deleteUser = (req, res) => {
-  // not implemented in this example, this is homework
+  res.json({ message: 'User item deleted.' });
   res.sendStatus(200);
 };
 

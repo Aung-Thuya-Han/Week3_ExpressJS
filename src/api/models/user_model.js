@@ -26,15 +26,15 @@ const findUserById = (id) => {
 };
 
 const addUser = (user) => {
-  const { user_name, weight, owner, filename, birthdate } = user;
-  const newId = userItems[0].user_id + 1;
-  userItems.unshift({
+  const { name, username, email, role, password } = user;
+  const newId = Math.max(...userItems.map((item) => item.user_id)) + 1;
+  userItems.push({
     user_id: newId,
-    user_name,
-    weight,
-    owner,
-    filename,
-    birthdate,
+    name,
+    username,
+    email,
+    role,
+    password,
   });
   return { user_id: newId };
 };
