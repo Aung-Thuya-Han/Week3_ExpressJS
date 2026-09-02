@@ -1,7 +1,7 @@
 // mock data
 const catItems = [
   {
-    cat_id: 3,
+    cat_id: 1,
     cat_name: 'Maung Maung',
     weight: 11,
     owner: 103,
@@ -9,7 +9,7 @@ const catItems = [
     birthdate: '2021-10-12',
   },
   {
-    cat_id: 4,
+    cat_id: 2,
     cat_name: 'Nyaung',
     weight: 8,
     owner: 104,
