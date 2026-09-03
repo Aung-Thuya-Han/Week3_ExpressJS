@@ -17,7 +17,16 @@ const postCat = (req, res) => {
   console.log("req.body", req.body);
   console.log("req.file", req.file);
 
-  const newCat = {...req.body, filename: req.file.filename};
+
+
+  const newCat = {
+  ...req.body,
+  weight: Number(req.body.weight),
+  owner: Number(req.body.owner),
+  filename: req.file.filename,
+};
+
+
 
   const result = addCat(newCat);
   if (result.cat_id) {
