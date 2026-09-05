@@ -1,4 +1,5 @@
-// mock data
+import promisePool from '../../utils/database.js';
+
 const catItems = [
   {
     cat_id: 1,
@@ -18,8 +19,9 @@ const catItems = [
   },
 ];
 
-const listAllCats = () => {
-  return catItems;
+const listAllCats = async () => {
+  const [rows] = await promisePool.query('SELECT * FROM wsk_cats');
+  return rows;
 };
 
 const findCatById = (id) => {
