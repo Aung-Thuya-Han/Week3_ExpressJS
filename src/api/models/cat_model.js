@@ -24,8 +24,13 @@ const listAllCats = async () => {
   return rows;
 };
 
-const findCatById = (id) => {
-  return catItems.find((item) => item.cat_id == id);
+const findCatById = async (id) => {
+  const [rows] = await promisePool.execute(
+    'SELECT * FROM wsk_cats WHERE cat_id = ?',
+    [id],
+  );
+  
+  return rows[0];
 };
 
 const addCat = (cat) => {
