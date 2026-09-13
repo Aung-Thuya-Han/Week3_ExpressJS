@@ -33,6 +33,7 @@ const findCatById = async (id) => {
   return rows[0];
 };
 
+/* 
 const addCat = (cat) => {
   const { cat_name, weight, owner, filename, birthdate } = cat;
   const newId = Math.max(...catItems.map((item) => item.cat_id)) + 1;
@@ -45,6 +46,27 @@ const addCat = (cat) => {
     birthdate,
   });
   return { cat_id: newId };
+};
+*/
+
+const addCat = async (cat) => {
+  const {cat_name, weight, owner, filename, birthdate} = cat;
+
+  const sql = `
+    INSERT INTO wsk_cats
+      (cat_name, weight, owner, filename, birthdate)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  const params = [cat_name, weight, owner, filename, birthdate];
+
+  const [result] = await promisePool.execute(sql, params);
+
+  if (result.affectedRows === 0) {
+    return false;
+  }
+
+  return {cat_id: result.insertId};
 };
 
 const modifyCat = async (cat, id) => {
