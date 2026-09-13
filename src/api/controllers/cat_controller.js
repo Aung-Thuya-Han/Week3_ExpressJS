@@ -1,4 +1,4 @@
-import { addCat, findCatById, listAllCats } from '../models/cat_model.js';
+import {addCat, findCatById, listAllCats, modifyCat, removeCat} from '../models/cat_model.js';
 
 const getCat = async (req, res) => {
   const cats = await listAllCats();
