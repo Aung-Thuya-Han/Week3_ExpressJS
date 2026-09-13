@@ -1,3 +1,5 @@
+/*
+
 const userItems = [
   {
     user_id: 3609,
@@ -17,6 +19,29 @@ const userItems = [
   },
 ];
 
+*/
+
+import promisePool from '../../utils/database.js';
+
+const listAllUsers = async () => {
+  const [rows] = await promisePool.query(
+    'SELECT * FROM wsk_users',
+  );
+
+  return rows;
+};
+
+const findUserById = async (id) => {
+  const [rows] = await promisePool.execute(
+    'SELECT * FROM wsk_users WHERE user_id = ?',
+    [id],
+  );
+
+  return rows[0];
+};
+
+/*
+
 const listAllUsers = () => {
   return userItems;
 };
@@ -24,6 +49,8 @@ const listAllUsers = () => {
 const findUserById = (id) => {
   return userItems.find((item) => item.user_id == id);
 };
+
+*/
 
 const addUser = (user) => {
   const { name, username, email, role, password } = user;

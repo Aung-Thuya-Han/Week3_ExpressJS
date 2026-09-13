@@ -1,5 +1,7 @@
 import { addUser, findUserById, listAllUsers } from "../models/user_model.js";
 
+/*
+
 const getUser = (req, res) => {
   res.json(listAllUsers());
 };
@@ -8,6 +10,23 @@ const getUserById = (req, res) => {
   const User = findUserById(req.params.id);
   if (User) {
     res.json(User);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+*/
+
+const getUser = async (req, res) => {
+  const users = await listAllUsers();
+  res.json(users);
+};
+
+const getUserById = async (req, res) => {
+  const user = await findUserById(req.params.id);
+
+  if (user) {
+    res.json(user);
   } else {
     res.sendStatus(404);
   }
