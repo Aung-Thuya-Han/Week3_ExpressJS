@@ -1,5 +1,7 @@
 import promisePool from '../../utils/database.js';
 
+/*
+
 const catItems = [
   {
     cat_id: 1,
@@ -18,6 +20,8 @@ const catItems = [
     birthdate: '2021-10-12',
   },
 ];
+
+*/
 
 const listAllCats = async () => {
   const [rows] = await promisePool.query('SELECT * FROM wsk_cats');
