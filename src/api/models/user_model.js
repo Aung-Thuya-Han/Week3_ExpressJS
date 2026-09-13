@@ -52,6 +52,28 @@ const findUserById = (id) => {
 
 */
 
+const addUser = async (user) => {
+  const {name, username, email, role, password} = user;
+
+  const sql = `
+    INSERT INTO wsk_users
+      (name, username, email, role, password)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  const params = [name, username, email, role, password];
+
+  const [result] = await promisePool.execute(sql, params);
+
+  if (result.affectedRows === 0) {
+    return false;
+  }
+
+  return {user_id: result.insertId};
+};
+
+/*
+
 const addUser = (user) => {
   const { name, username, email, role, password } = user;
   const newId = Math.max(...userItems.map((item) => item.user_id)) + 1;
@@ -66,4 +88,23 @@ const addUser = (user) => {
   return { user_id: newId };
 };
 
-export { listAllUsers, findUserById, addUser };
+*/
+
+
+const modifyUser = async (user, id) => {
+  const sql = promisePool.format(
+    'UPDATE wsk_users SET ? WHERE user_id = ?',
+    [user, id],
+  );
+
+  const [result] = await promisePool.execute(sql);
+
+  if (result.affectedRows === 0) {
+    return false;
+  }
+
+  return {message: 'User updated'};
+};
+
+
+export { listAllUsers, findUserById, addUser, modifyUser };

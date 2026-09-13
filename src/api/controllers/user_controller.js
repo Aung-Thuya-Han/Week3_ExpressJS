@@ -1,4 +1,4 @@
-import { addUser, findUserById, listAllUsers } from "../models/user_model.js";
+import { addUser, findUserById, listAllUsers, modifyUser } from "../models/user_model.js";
 
 /*
 
@@ -32,6 +32,8 @@ const getUserById = async (req, res) => {
   }
 };
 
+/* 
+
 const postUser = (req, res) => {
   console.log("req.body", req.body);
   const result = addUser(req.body);
@@ -43,14 +45,46 @@ const postUser = (req, res) => {
   }
 };
 
+*/
+
+const postUser = async (req, res) => {
+  const result = await addUser(req.body);
+
+  if (result) {
+    res.status(201).json({
+      message: 'New user added.',
+      result,
+    });
+  } else {
+    res.sendStatus(400);
+  }
+};
+
+/*
+
 const putUser = (req, res) => {
   res.json({ message: 'User item updated.' });
   res.sendStatus(200);
 };
 
+*/
+
 const deleteUser = (req, res) => {
   res.json({ message: 'User item deleted.' });
   res.sendStatus(200);
+};
+
+const putUser = async (req, res) => {
+  const result = await modifyUser(req.body, req.params.id);
+
+  if (result) {
+    res.json({
+      message: 'User item updated.',
+      result,
+    });
+  } else {
+    res.sendStatus(404);
+  }
 };
 
 export { getUser, getUserById, postUser, putUser, deleteUser };
