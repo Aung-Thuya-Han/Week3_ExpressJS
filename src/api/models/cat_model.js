@@ -23,6 +23,13 @@ const catItems = [
 
 */
 
+const catSelect = `
+  SELECT wsk_cats.*, wsk_users.name AS owner_name
+  FROM wsk_cats
+  JOIN wsk_users
+    ON wsk_cats.owner = wsk_users.user_id
+`;
+
 const listAllCats = async () => {
   const [rows] = await promisePool.query('SELECT * FROM wsk_cats');
   return rows;
@@ -36,6 +43,16 @@ const findCatById = async (id) => {
   
   return rows[0];
 };
+
+const findCatsByUserId = async (id) => {
+  const [rows] = await promisePool.execute(
+    `${catSelect} WHERE wsk_cats.owner = ?`,
+    [id],
+  );
+
+  return rows;
+};
+
 
 /* 
 const addCat = (cat) => {
@@ -101,4 +118,4 @@ const removeCat = async (id) => {
   return {message: 'Cat deleted'};
 };
 
-export { listAllCats, findCatById, addCat, modifyCat, removeCat };
+export { listAllCats, findCatById, findCatsByUserId, addCat, modifyCat, removeCat };

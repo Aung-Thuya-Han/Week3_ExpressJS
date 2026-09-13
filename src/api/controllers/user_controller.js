@@ -1,4 +1,4 @@
-import { addUser, findUserById, listAllUsers, modifyUser } from "../models/user_model.js";
+import { addUser, findUserById, listAllUsers, modifyUser, removeUser } from "../models/user_model.js";
 
 /*
 
@@ -67,11 +67,26 @@ const putUser = (req, res) => {
   res.sendStatus(200);
 };
 
-*/
+
 
 const deleteUser = (req, res) => {
   res.json({ message: 'User item deleted.' });
   res.sendStatus(200);
+};
+
+*/
+
+const deleteUser = async (req, res) => {
+  const result = await removeUser(req.params.id);
+
+  if (result) {
+    res.json({
+      message: 'User and their cats deleted.',
+      result,
+    });
+  } else {
+    res.sendStatus(404);
+  }
 };
 
 const putUser = async (req, res) => {

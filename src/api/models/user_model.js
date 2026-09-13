@@ -106,5 +106,35 @@ const modifyUser = async (user, id) => {
   return {message: 'User updated'};
 };
 
+const removeUser = async (id) => {
+  const connection = await promisePool.getConnection();
 
-export { listAllUsers, findUserById, addUser, modifyUser };
+  try {
+    await connection.beginTransaction();
+
+    await connection.execute(
+      'DELETE FROM wsk_cats WHERE owner = ?',
+      [id],
+    );
+
+    const [result] = await connection.execute(
+      'DELETE FROM wsk_users WHERE user_id = ?',
+      [id],
+    );
+
+    if (result.affectedRows === 0) {
+      await connection.rollback();
+      return false;
+    }
+
+    await connection.commit();
+    return {message: 'User and their cats deleted'};
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
+};
+
+export { listAllUsers, findUserById, addUser, modifyUser, removeUser };
