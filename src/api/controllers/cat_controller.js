@@ -38,14 +38,30 @@ const postCat = (req, res) => {
   }
 };
 
-const putCat = (req, res) => {
-  res.json({ message: 'Cat item updated.' });
-  res.sendStatus(200);
+const putCat = async (req, res) => {
+  const result = await modifyCat(req.body, req.params.id);
+
+  if (result) {
+    res.json({
+      message: 'Cat item updated.',
+      result,
+    });
+  } else {
+    res.sendStatus(404);
+  }
 };
 
-const deleteCat = (req, res) => {
-  res.json({ message: 'Cat item deleted.' });
-  res.sendStatus(200);
+const deleteCat = async (req, res) => {
+  const result = await removeCat(req.params.id);
+
+  if (result) {
+    res.json({
+      message: 'Cat item deleted.',
+      result,
+    });
+  } else {
+    res.sendStatus(404);
+  }
 };
 
 export { getCat, getCatById, postCat, putCat, deleteCat };
